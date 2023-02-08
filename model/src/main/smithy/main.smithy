@@ -1,3 +1,4 @@
+$version: "2"
 namespace software.amazon.smithy.demo
 
 use aws.auth#sigv4
@@ -16,7 +17,7 @@ use smithy.framework#ValidationException
 @restJson1
 service StringWizard {
     version: "2018-05-10",
-    operations: [Echo, Length],
+    operations: [Echo, Length, StreamOperation],
 }
 
 /// Echo operation that receives input from body.
@@ -60,3 +61,20 @@ structure LengthOutput {
 structure PalindromeException {
     message: String,
 }
+
+
+@readonly
+@http(code: 200, method: "PUT", uri: "/stream",)
+operation StreamOperation {
+    input := {
+        @httpPayload
+        @required
+        logo: LogoData
+    },
+    output := {},
+    errors: [ValidationException],
+}
+
+@mediaType("image/png")
+@streaming
+blob LogoData
