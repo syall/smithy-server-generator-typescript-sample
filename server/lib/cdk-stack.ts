@@ -23,6 +23,7 @@ export class CdkStack extends Stack {
     const entry_points: { [op in StringWizardServiceOperations]: string } = {
       Echo: "echo_handler",
       Length: "length_handler",
+      StreamOperation: "streamOperation_handler",
     };
 
     const functions = (Object.keys(entry_points) as StringWizardServiceOperations[]).reduce(
